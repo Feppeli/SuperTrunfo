@@ -1,3 +1,4 @@
+// Criação das cartas usando Objetos para armazenar as informações
 var cartaChristiane = {
     nome: "Thor",
     imagem:"https://cdn.ome.lt/pfIcbIk870YITAzNsEQ2Tx8kdlA=/1200x630/smart/extras/conteudos/thor-love-5.jpg",
@@ -77,32 +78,39 @@ var cartaLucas = {
         magia: 100
       }
 }
-  
+
+// variáveis para destinguir a carta do jogador da carta da máquina
 var cartaMaquina 
-var cartaJogador 
+var cartaJogador
+
+//variável que reúne numa lista as cartas existentes
 var cartas = [cartaChristiane, cartaArthur, cartaAlex, cartaIsabella, cartaYasmin, cartaMarcela, cartaRosana, cartaLucas]
                 // 0              1             2            3             4               5           6           7            
-  
+
+// variáveis para zerar a pontuação da máquina e do jogador
 var pontosJogador = 0
 var pontosMaquina = 0
   
 atualizaPlacar()
 atualizaQuantidadeDeCartas()
-  
+
+// função para diminuir a quantidade de cartas fazendo que elas não se repitam durante a partida
 function atualizaQuantidadeDeCartas() {
     var divQuantidadeCartas = document.getElementById('quantidade-cartas')
     var html = "Quantidade de cartas no jogo: " + cartas.length
   
     divQuantidadeCartas.innerHTML = html
 }
-  
+
+// função para atualizar o placar após clicar em jogar
 function atualizaPlacar() {
     var divPlacar = document.getElementById('placar')
     var html = "Jogador " + pontosJogador + "/" + pontosMaquina + " Máquina"
   
     divPlacar.innerHTML = html
 }
-  
+
+// função para sortear a carta após clicar no botão
 function sortearCarta() {
     var numeroCartaMaquina = parseInt(Math.random() * cartas.length)
     cartaMaquina = cartas[numeroCartaMaquina]
@@ -115,9 +123,12 @@ function sortearCarta() {
     document.getElementById('btnSortear').disabled = true
     document.getElementById('btnJogar').disabled = false
   
+    // função sendo chamada logo após sortear a carta
     exibeCartaJogador()
 }
-  
+
+
+// função para exibir a carta do jogador
 function exibeCartaJogador() {
     var divCartaJogador = document.getElementById("carta-jogador")
     var moldura = '<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent.png" style=" width: inherit; height: inherit; position: absolute;">';
@@ -133,7 +144,8 @@ function exibeCartaJogador() {
   
     divCartaJogador.innerHTML = moldura + nome + html + opcoesTexto + '</div>'
 }
-  
+
+//função para selecionar e obter o atributo da carta
 function obtemAtributoSelecionado() {
     var radioAtributo = document.getElementsByName('atributo')
     for (var i = 0; i < radioAtributo.length; i++) {
@@ -142,7 +154,8 @@ function obtemAtributoSelecionado() {
         }
     }
 }
-  
+
+// função que aciona o botão jogar
 function jogar() {
     var divResultado = document.getElementById("resultado")
     var atributoSelecionado = obtemAtributoSelecionado()
@@ -158,7 +171,7 @@ function jogar() {
     }
   
     if (cartas.length == 0) {
-        alert("Fim de jogo")
+        alert("Fim de jogo") //quando não tiver mais cartas parar sortear vai ser imprimido um alerta no mavegador
         if (pontosJogador > pontosMaquina) {
             htmlResultado = '<p class="resultado-final">Venceu</p>'
         } else if (pontosMaquina > pontosJogador) {
@@ -173,11 +186,12 @@ function jogar() {
     divResultado.innerHTML = htmlResultado
     document.getElementById('btnJogar').disabled = true
   
-    atualizaPlacar()
-    exibeCartaMaquina()
-    atualizaQuantidadeDeCartas()
+    atualizaPlacar() // chamando para que seja atualizado o placar
+    exibeCartaMaquina() // após apertar em jogar a car da máquina será revelada
+    atualizaQuantidadeDeCartas() // irá eliminar as cartas já jogadas
 }
-  
+
+// função para exibir a carta da máquina
 function exibeCartaMaquina() {
     var divCartaMaquina = document.getElementById("carta-maquina")
     var moldura = '<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent.png" style=" width: inherit; height: inherit; position: absolute;">';
@@ -194,7 +208,8 @@ function exibeCartaMaquina() {
   
     divCartaMaquina.innerHTML = moldura + nome + html + opcoesTexto + '</div>'
 }
-  
+
+// função para resetar a jogada
 function proximaRodada() {
     var divCartas = document.getElementById('cartas')
   
